@@ -178,8 +178,8 @@ class CFMMCCrawler(object):
         """
         import tushare as ts
         pro = ts.pro_api(self.tushare_token)
-        df = pro.query('trade_cal', exchange='DCE', start_date=start_date, end_date=end_date, is_open=1)
-        date_str = df['cal_date'].values.tolist()
+        df = pro.daily(**{"ts_code": "000001.sz","start_date": start_date,"end_date":end_date,}, fields=["trade_date"])
+        date_str = df['trade_date'].values.tolist()
         return [dt.datetime.strptime(it, '%Y%m%d') for it in date_str]
 
     def batch_daily_download(self, start_date: str, end_date: str) -> None:
